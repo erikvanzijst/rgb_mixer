@@ -12,7 +12,7 @@ class BouncingSwitch():
         self.dut = dut
 
     async def set(self, value, bounce_cycles = 6):
-        for i in range(bounce_cycles):
+        for _ in range(bounce_cycles):
             self.dut.button <= random.randint(0, 1)
             await ClockCycles(self.dut.clk, 1)
 
@@ -39,7 +39,7 @@ async def test_debouncer(dut):
     assert dut.debounced == 0
 
     # toggle button 10 times
-    for i in range(20):
+    for _ in range(20):
         # set the switch, which will bounce
         await switch.set(1)
 

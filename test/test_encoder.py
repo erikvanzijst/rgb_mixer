@@ -9,7 +9,7 @@ async def reset(dut):
     dut.reset <= 1
 
     await ClockCycles(dut.clk, 5)
-    dut.reset <= 0;
+    dut.reset <= 0
     await ClockCycles(dut.clk, 5)
 
 
@@ -25,13 +25,13 @@ async def test_perfect_encoder(dut):
     assert dut.value == 0
 
     # count up
-    for i in range(clocks_per_phase * 2 *  255):
+    for _ in range(clocks_per_phase * 2 *  255):
         await encoder.update(1)
 
     assert(dut.value == 255)
 
     # count down
-    for i in range(clocks_per_phase * 2 * 255):
+    for _ in range(clocks_per_phase * 2 * 255):
         await encoder.update(-1)
 
     assert(dut.value == 0)
