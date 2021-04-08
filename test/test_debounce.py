@@ -2,6 +2,9 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
 
+# Needs to match debounce.WIDTH:
+HIST_WIDTH = 16
+
 class BouncingSwitch():
 
     def __init__(self, dut):
@@ -43,7 +46,7 @@ async def test_debouncer(dut):
         assert dut.debounced == 0
 
         # wait 8 clock cycles (default history length in debounce.v) + 1 for register
-        await ClockCycles(dut.clk,9) 
+        await ClockCycles(dut.clk, HIST_WIDTH + 1)
 
         # assert button is as set
         assert dut.debounced == 1
@@ -55,7 +58,7 @@ async def test_debouncer(dut):
         assert dut.debounced == 1
 
         # wait 8 clock cycles (default history length in debounce.v) + 1 for register
-        await ClockCycles(dut.clk, 9)
+        await ClockCycles(dut.clk,  HIST_WIDTH + 1)
 
         assert dut.debounced == 0
 

@@ -7,18 +7,20 @@ module debounce (
     output reg debounced
     );
 
-    reg [7:0] measurements;
-    wire enable = (measurements == 8'hFF || measurements == 8'h0);
+    parameter WIDTH = 16;
+    localparam fully_on = 2 ** WIDTH - 1;
+    reg [WIDTH-1:0] measurements;
+    wire enable = (measurements == fully_on || measurements == 0);
 
     always @(posedge clk) begin
         if (reset) begin
-            measurements <= 8'b0;
+            measurements <= 0;
             debounced <= 1'b0;
         end else begin
             measurements <= (measurements << 1) | button;
 
             if (enable) begin
-                debounced <= (measurements == 8'hFF) ? 1'b1 : 1'b0;
+                debounced <= (measurements == fully_on) ? 1'b1 : 1'b0;
             end
         end
     end
