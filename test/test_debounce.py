@@ -1,16 +1,15 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
-import random
 
 class BouncingSwitch():
 
     def __init__(self, dut):
         self.dut = dut
 
-    async def set(self, value, bounce_cycles = 5):
+    async def set(self, value, bounce_cycles = 6):
         for i in range(bounce_cycles):
-            self.dut.button <= random.randint(0, 1)
+            self.dut.button <= (i % 2)
             await ClockCycles(self.dut.clk, 1)
 
         # finally set to what it should be
@@ -23,13 +22,12 @@ async def reset(dut):
     dut.button <= 0
 
     await ClockCycles(dut.clk, 5)
-    dut.reset <= 0;
+    dut.reset <= 0
     await ClockCycles(dut.clk, 5)
 
 @cocotb.test()
 async def test_debouncer(dut):
     clock = Clock(dut.clk, 10, units="us")
-    clocks_per_phase = 10
     switch = BouncingSwitch(dut)
     cocotb.fork(clock.start())
 
