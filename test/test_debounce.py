@@ -1,9 +1,10 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
+import random
 
 # Needs to match debounce.WIDTH:
-HIST_WIDTH = 16
+HIST_WIDTH = 8
 
 class BouncingSwitch():
 
@@ -12,7 +13,7 @@ class BouncingSwitch():
 
     async def set(self, value, bounce_cycles = 6):
         for i in range(bounce_cycles):
-            self.dut.button <= (i % 2)
+            self.dut.button <= random.randint(0, 1)
             await ClockCycles(self.dut.clk, 1)
 
         # finally set to what it should be
@@ -38,7 +39,7 @@ async def test_debouncer(dut):
     assert dut.debounced == 0
 
     # toggle button 10 times
-    for i in range(10):
+    for i in range(20):
         # set the switch, which will bounce
         await switch.set(1)
 

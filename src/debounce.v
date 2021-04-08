@@ -7,7 +7,7 @@ module debounce (
     output reg debounced
     );
 
-    parameter WIDTH = 16;
+    parameter WIDTH = 8;
     localparam fully_on = 2 ** WIDTH - 1;
     reg [WIDTH-1:0] measurements;
     wire enable = (measurements == fully_on || measurements == 0);
