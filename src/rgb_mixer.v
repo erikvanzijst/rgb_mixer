@@ -24,15 +24,15 @@ module rgb_mixer (
     debounce debounce0_a(.clk(clk), .reset(reset), .button(enc0_a), .debounced(deb0_a));
     debounce debounce0_b(.clk(clk), .reset(reset), .button(enc0_b), .debounced(deb0_b));
     encoder encoder0(.clk(clk), .reset(reset), .a(deb0_a), .b(deb0_b), .value(enc0));
-    pwm pwm0(.clk(clk), .reset(reset), .out(pwm0_out), .level(enc0));
+    pwm #(.WIDTH(8)) pwm0(.clk(clk), .reset(reset), .out(pwm0_out), .level(enc0));
 
     debounce debounce1_a(.clk(clk), .reset(reset), .button(enc1_a), .debounced(deb1_a));
     debounce debounce1_b(.clk(clk), .reset(reset), .button(enc1_b), .debounced(deb1_b));
     encoder encoder1(.clk(clk), .reset(reset), .a(deb1_a), .b(deb1_b), .value(enc1));
-    pwm pwm1(.clk(clk), .reset(reset), .out(pwm1_out), .level(enc1));
+    pwm #(.WIDTH(8)) pwm1(.clk(clk), .reset(reset), .out(pwm1_out), .level(enc1));
 
     debounce debounce2_a(.clk(clk), .reset(reset), .button(enc2_a), .debounced(deb2_a));
     debounce debounce2_b(.clk(clk), .reset(reset), .button(enc2_b), .debounced(deb2_b));
     encoder encoder2(.clk(clk), .reset(reset), .a(deb2_a), .b(deb2_b), .value(enc2));
-    pwm pwm2(.clk(clk), .reset(reset), .out(pwm2_out), .level(enc2));
+    pwm #(.WIDTH(8)) pwm2(.clk(clk), .reset(reset), .out(pwm2_out), .level(enc2));
 endmodule
