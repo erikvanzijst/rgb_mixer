@@ -16,11 +16,11 @@ async def reset(dut):
     dut.reset  <= 1
 
     await ClockCycles(dut.clk, 5)
-    dut.reset <= 0;
+    dut.reset <= 0
     await ClockCycles(dut.clk, 5) # how long to wait for the debouncers to clear
 
 async def run_encoder_test(encoder, dut_enc, max_count):
-    for i in range(clocks_per_phase * 2 * max_count):
+    for _ in range(clocks_per_phase * 2 * max_count):
         await encoder.update(1)
 
     # let noisy transition finish, otherwise can get an extra count
